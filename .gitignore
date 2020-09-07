@@ -127,3 +127,14 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# personalized ingores
+*.db
+__pycache__
+.vscode/
+bot/.vscode/
+mop_bot.pem
+config
+utils/mop_database.py
+utils/db.py
+mop-bot.pem
