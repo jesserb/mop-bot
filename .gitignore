@@ -138,3 +138,5 @@ config
 utils/mop_database.py
 utils/db.py
 mop-bot.pem
+nohup.out
+.DS_Store
