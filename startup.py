@@ -4,7 +4,8 @@ import sys, traceback, platform
 
 # COGS
 initial_extensions = [
-    'cogs.registration'
+    'cogs.registration',
+    'cogs.member'
 ]
 
 
@@ -39,11 +40,10 @@ config = {
 bot = commands.Bot(command_prefix = config[botType]['prefix'])
 bot.remove_command('help')
 
+
 @bot.event
 async def on_ready():
-    print('\n\n\nLogged in as {} (ID: {}) | Connected to {} servers'
-        .format(bot.user, bot.user.id, len(bot.guilds))
-    )
+    print('\n\n\nLogged in as {} (ID: {}) | Connected to {} servers'.format(bot.user, bot.user.id, len(bot.guilds)))
     print('-------'*18)
     print('Discord.py Version: {} | Python Version: {}'.format(discord.__version__, platform.python_version()))
     print('-------'*18)
@@ -58,7 +58,7 @@ async def on_ready():
             try:
                 bot.load_extension(extension)
                 print('{} loaded'.format(extension))
-            except Exception as e:
+            except Exception:
                 print('issue with',extension)
                 traceback.print_exc()
         print('Successfully logged in and booted...! Use prefix: "'+config['Mop']['prefix']+'".\n\n')
@@ -66,3 +66,15 @@ async def on_ready():
 # Start your engines~~
 bot.run(config[botType]['token'], bot=True, reconnect=True)
 
+
+# @bot.event
+# async def on_message(message):
+#     print('YEAH YEAH')
+#     channel = message.channel
+#     await channel.send('We see it all good!')
+#     await bot.process_commands(message)
+
+
+# # @bot.event       
+# # async def on_member_join(member):
+# #     print('yeah someone joined!')
