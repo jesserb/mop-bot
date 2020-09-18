@@ -8,13 +8,6 @@ from contextlib import suppress
 
 
 
-configFile = open('config')
-configs = configFile.readlines()
-config = {
-    'OWNER': {
-        'ids': configs[3].split()[1].split('\n')[0].split(',')
-    }
-}
 
 
 class MemberCog(commands.Cog):
@@ -48,6 +41,14 @@ class MemberCog(commands.Cog):
             error += "Please retry your command in a bot friendly channel in your server where I reside."
             await ctx.message.author.send('{}'.format(error))
             return
+
+
+        # HELP COMMAND INVOKED
+        if len(args) and args[0].lower() == 'help':
+            await ctx.invoke(self.bot.get_command('help'), option='member')
+            return
+
+
 
         # function to check that reaction is from user who called this command
         def checkUser(reaction, user):

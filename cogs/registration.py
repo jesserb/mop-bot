@@ -4,13 +4,6 @@ import sys, asyncio
 from utils.db import RegisterMember, GetMember, UpdateMemberStatus
 
 
-configFile = open('config')
-configs = configFile.readlines()
-config = {
-    'OWNER': {
-        'ids': configs[3].split()[1].split('\n')[0].split(',')
-    }
-}
 
 class RegistrationCog(commands.Cog):
     
@@ -30,7 +23,7 @@ class RegistrationCog(commands.Cog):
 
 
     @commands.command()
-    async def register(self, ctx):
+    async def register(self, ctx, *args):
 
 
         #ERROR CHECK - dm bot commands not allowed
@@ -40,6 +33,12 @@ class RegistrationCog(commands.Cog):
             error = "**You cannot run bot commands in a DM** "
             error += "Please retry your command in a bot friendly channel in your server where I reside."
             await ctx.message.author.send('{}'.format(error))
+            return
+
+
+        # HELP COMMAND INVOKED
+        if len(args) and args[0].lower() == 'help':
+            await ctx.invoke(self.bot.get_command('help'), option='register')
             return
 
 

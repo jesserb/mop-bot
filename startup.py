@@ -1,43 +1,20 @@
 import discord
 from discord.ext import commands
 import sys, traceback, platform
+from utils.configsloader import loadBotConfigs
+
 
 # COGS
 initial_extensions = [
+    'cogs.developer',
     'cogs.registration',
-    'cogs.member'
+    'cogs.member',
+    'cogs.help'
 ]
 
-
-# determine which bot to load up
-botType = ''
-# error checking
-if len(sys.argv) > 2:
-    print('**ERROR: Too many arguments. program takes at most one.\nexiting... ... ...')
-    sys.exit()
-    
-# handle argument
-if len(sys.argv) > 1:
-    botType = sys.argv[1]
-else:
-    botType = 'Mop'
-
-
-# Load configs
-configFile = open('config')
-configs = configFile.readlines()
-config = {
-    'Mop': {
-        'token': (configs[1].split()[1]).split('\n')[0],
-        'prefix': (configs[2].split()[1]).split('\n')[0],
-    },
-    'MopTestSim': {
-        'token': (configs[7].split()[1]).split('\n')[0],
-        'prefix': (configs[8].split()[1]).split('\n')[0],
-    },
-}
-
-bot = commands.Bot(command_prefix = config[botType]['prefix'])
+# Get bot from config
+config = loadBotConfigs()
+bot = commands.Bot(command_prefix = config['prefix'])
 bot.remove_command('help')
 
 
@@ -61,20 +38,7 @@ async def on_ready():
             except Exception:
                 print('issue with',extension)
                 traceback.print_exc()
-        print('Successfully logged in and booted...! Use prefix: "'+config['Mop']['prefix']+'".\n\n')
+        print('Successfully logged in and booted...! Use prefix: "'+config['prefix']+'".\n\n')
 
 # Start your engines~~
-bot.run(config[botType]['token'], bot=True, reconnect=True)
-
-
-# @bot.event
-# async def on_message(message):
-#     print('YEAH YEAH')
-#     channel = message.channel
-#     await channel.send('We see it all good!')
-#     await bot.process_commands(message)
-
-
-# # @bot.event       
-# # async def on_member_join(member):
-# #     print('yeah someone joined!')
+bot.run(config['token'], bot=True, reconnect=True)

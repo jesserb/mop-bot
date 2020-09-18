@@ -140,3 +140,4 @@ utils/db.py
 mop-bot.pem
 nohup.out
 .DS_Store
+devsession
